@@ -8,7 +8,7 @@ I'd like to clean it up, refactor it, and document it extensively, but in the me
 * The EVIL bindings are pretty close to what I got from [Steve Losh's excellent guide](http://stevelosh.com/blog/2010/09/coming-home-to-vim/)
 * EVIL is usually on, but I turn it off for stuff like Magit and the CIDER REPL.
 * evil-insert mode is a lot like Emacs normally is, but not quite exactly.
-* <SPACE> is the leader key. It's not mapped to much, but <leader>G brings up Magit status, so that's cool.
+* \<SPACE\> is the leader key. It's not mapped to much, but \<leader\>g brings up Magit status, so that's cool.
 * Paredit and CIDER keys are basically unchanged from the defaults.
 
 ## Install
