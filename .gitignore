@@ -1,0 +1,49 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/*.el~
+
+.*.swp
+.*.swo
+.*.un~
+*.elc
+*.ido.last~
+/backups/
+/elpa/
+
+/places/
+/places
+/backups/!Users!justin!.ido.last~
+ac-comphist.dat
+/ac-comphist.dat
+/ac-comphist.dat
+/backups/!Users!justin!.ido.last~
+/elpa/archives/gnu/archive-contents
+/elpa/archives/melpa/archive-contents
+/elpa/archives/org/archive-contents
+/places
