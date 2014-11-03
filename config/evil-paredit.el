@@ -1,4 +1,5 @@
 ;; Redefining EVIL to be more Paredit-friendly
+;; THIS IS GROSS AND WRONG. I know just enough elisp to know that this should be a minor mode, but not enough to make it one.
 
 (evil-define-operator evil-delete (beg end type register yank-handler)
   "Altered to respect paredit! -JHH

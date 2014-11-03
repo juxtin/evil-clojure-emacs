@@ -1,4 +1,9 @@
-;; (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+;; experimentally re-enabling this:
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+;; this might make the REPL prettier
+(setq cider-repl-use-clojure-font-lock t)
+
 (setq nrepl-hide-special-buffers t)
 (global-set-key (kbd "C-c n e b") 'cider-eval-buffer)
 

@@ -1,6 +1,9 @@
 (global-auto-complete-mode -1) ;; ac-mode seems to suck
 (add-hook 'after-init-hook 'global-company-mode) ;; company-mode supposedly does not suck
 
+(defun disable-company-mode () ;; but I don't want it in every mode
+  (setq company-mode nil))
+
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-line-mode)
 
@@ -10,7 +13,10 @@
 (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'markdown-mode-hook         #'enable-paredit-mode)
+(add-hook 'markdown-mode-hook         #'disable-company-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'haskell-mode-hook          #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
 (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
 (add-hook 'clojurescript-mode-hook    #'enable-paredit-mode)

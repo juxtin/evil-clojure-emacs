@@ -7,13 +7,12 @@
                         ido-ignore-files
                         '(
                           "^auto/$"
-                          ".o"
-                          ".bin"
-                          ".elc"
-                          ".un~"
-                          ".bin"
-                          ".swp"
-                          ".swo"
+                          "\.o/$"
+                          "\.bin/$"
+                          "\.elc/$"
+                          "\.un~/$"
+                          "\.swp/$"
+                          "\.swo/$"
                           "_region_"
                           )))
 (setq ido-use-filename-at-point 'guess)

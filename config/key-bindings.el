@@ -1,6 +1,9 @@
 ;; RMS is wrong about sentences.
 (setq sentence-end-double-space nil)
 
+;; if I'm going to list out buffers, I'd rather do it with helm
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+
 ;; command-` should cycle frames as per the rest of OS X
 (global-set-key (kbd "M-`") 'other-frame)
 

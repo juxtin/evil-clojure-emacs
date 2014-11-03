@@ -10,9 +10,11 @@
 (require 'powerline-separators)
 
 (evil-mode 1)
-(evilnc-default-hotkeys)
+;; (setq evilnc-comment-operator (kbd "SPC"))
+;; (evilnc-default-hotkeys) ;; seems to be breaking hella shit
 ;; (global-evil-tabs-mode t) ;;this works, but it's kind of annoying
 ;; (powerline-evil-vim-color-theme)
+(global-evil-surround-mode)
 (powerline-evil-theme)
 
 ;==================================================================================================================
@@ -25,6 +27,17 @@
 (setq evil-leader/leader "<SPC>" ;; cool tip from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
       evil-leader/in-all-states t)
 (global-evil-leader-mode)
+
+(evil-leader/set-key
+  "ag" 'ag-project
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "\\" 'evilnc-comment-operator
+  )
 
 ; <leader> W to cleanup whitespace
 (evil-leader/set-key "W" 'whitespace-cleanup)
@@ -44,8 +57,8 @@
 (evil-leader/set-key "ev" (lambda (arg) (interactive "P") (evil-window-vsplit 100 "~/.emacs.d/config/evil-config.el")))
 
 ;; <leader>a -> inc, <leader>x -> dec
-(evil-leader/set-key "a" 'evil-numbers/inc-at-pt)
-(evil-leader/set-key "x" 'evil-numbers/dec-at-pt)
+;; (evil-leader/set-key "a" 'evil-numbers/inc-at-pt)
+;; (evil-leader/set-key "x" 'evil-numbers/dec-at-pt)
 
 ;==================================================================================================================
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -102,22 +115,33 @@ If `end' is nil `begin-or-fun' will be treated as a fun."
 
 
 (cl-loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
+                                 (ag-mode . emacs)
                                  (fundamental-mode . emacs)
                                  (nav-mode . emacs)
                                  (pylookup-mode . emacs)
-                                 (cider-repl-mode . emacs)
-                                 (cider-stacktrace-mode . emacs)
+                                 ;; CIDER modes
                                  (cider-docview-mode . emacs)
+                                 (cider-inspector-mode . emacs)
+                                 (cider-macroexpansion-mode . emacs)
+                                 (cider-repl-mode . emacs)
+                                 (cider-result-mode . emacs)
+                                 (cider-stacktrace-mode . emacs)
+                                 (cider-test-report-mode . emacs)
+
                                  (comint-mode . emacs)
                                  (ebib-entry-mode . emacs)
                                  (ebib-index-mode . emacs)
                                  (ebib-log-mode . emacs)
+                                 (eshell-mode . emacs)
                                  (elfeed-show-mode . emacs)
                                  (elfeed-search-mode . emacs)
                                  (ensime-inf-mode . emacs)
                                  (gtags-select-mode . emacs)
                                  (git-commit-mode . emacs)
                                  (git-rebase-mode . emacs)
+                                 (haskell-interactive-mode . emacs)
+                                 (haskell-error-mode . emacs)
+                                 (dired-mode . emacs)
                                  (shell-mode . emacs)
                                  (term-mode . emacs)
                                  (bc-menu-mode . emacs)
@@ -136,11 +160,10 @@ If `end' is nil `begin-or-fun' will be treated as a fun."
              "C-t" 'transpose-chars
              "C-:" 'eval-expression
              "C-u" 'evil-scroll-up
-             "M-." 'cider-jump-to-var
              "D" 'paredit-kill
              "C" (lambda (arg) (interactive "P") (paredit-kill arg) (evil-insert arg))
              "I" (lambda (arg) (interactive "P") (move-beginning-of-line arg) (evil-insert arg))
-             "," 'evil-repeat-find-char-reverse
+             ;":" 'evil-repeat-find-char-reverse
              "gH" 'evil-window-top
              "gL" 'evil-window-bottom
              "gM" 'evil-window-middle
@@ -169,9 +192,6 @@ If `end' is nil `begin-or-fun' will be treated as a fun."
 ;; I don't know why this is necessary:
 (define-key evil-insert-state-map (kbd "C-w") 'evil-delete-backward-word)
 
-;; TBQH, I always want paredit-newline when I hit return:
-(define-key evil-insert-state-map (kbd "RET") 'paredit-newline)
-
 ;; move between windows like a civilized fucking human being
 (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
 (define-key evil-normal-state-map (kbd "C-h") 'windmove-left)
@@ -184,6 +204,10 @@ If `end' is nil `begin-or-fun' will be treated as a fun."
 (define-key evil-normal-state-map (kbd "gk") 'evil-previous-line)
 (define-key evil-normal-state-map (kbd "gj") 'evil-next-line)
 
+(define-key evil-motion-state-map (kbd "k") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "gk") 'evil-previous-line)
+(define-key evil-motion-state-map (kbd "gj") 'evil-next-line)
 
 ;; remap SPC and RET so that they won't be active in evil mode (since they just duplicate j and l)
 (defun my-move-key (keymap-from keymap-to key)
@@ -199,13 +223,3 @@ If `end' is nil `begin-or-fun' will be treated as a fun."
 (setq evil-visual-state-cursor '("orange" box))
 (setq evil-insert-state-cursor '("gray" bar))
 (setq evil-motion-state-cursor '("gray" box))
-
-;; Leaving this disabled for now since it just caused me pain before
-;; but it might be useful at some point:
-;; 
-;; (defcustom evil-insert-state-modes
-;;   '(git-commit-mode comint-mode erc-mode eshell-mode geiser-repl-mode gud-mode inferior-apl-mode inferior-caml-mode inferior-emacs-lisp-mode inferior-j-mode inferior-python-mode inferior-scheme-mode inferior-sml-mode internal-ange-ftp-mode prolog-inferior-mode reb-mode shell-mode slime-repl-mode term-mode wdired-mode)
-;;   "Modes that should come up in Insert state."
-;;   :type  '(repeat symbol)
-;;   :group 'evil)
-
