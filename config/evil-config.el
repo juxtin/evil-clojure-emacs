@@ -17,6 +17,9 @@
 (global-evil-surround-mode)
 (powerline-evil-theme)
 
+;; C-* for searches for the current symbol in reverse
+(define-key evil-normal-state-map (kbd "C-*") 'evil-search-word-backward)
+
 ;==================================================================================================================
 ;==================================================================================================================
 ;; LEADER LEADER LEADER LEADER
@@ -56,9 +59,8 @@
 ;; <leader> ev opens a new split to edit this file.
 (evil-leader/set-key "ev" (lambda (arg) (interactive "P") (evil-window-vsplit 100 "~/.emacs.d/config/evil-config.el")))
 
-;; <leader>a -> inc, <leader>x -> dec
-;; (evil-leader/set-key "a" 'evil-numbers/inc-at-pt)
-;; (evil-leader/set-key "x" 'evil-numbers/dec-at-pt)
+;; I wish this wasn't necessary
+(define-key evil-normal-state-map (kbd ",") 'evil-repeat-find-char-reverse)
 
 ;==================================================================================================================
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

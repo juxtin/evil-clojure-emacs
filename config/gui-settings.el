@@ -7,11 +7,21 @@
 ;; (load "~/.emacs.d/lib/monokai-emacs/monokai-theme")
 ;; (load-theme 'monokai t)
 
+;; show the current line in the left margin
 (linum-mode)
-;; (global-hl-line-mode)
+
+;; linum font size shouldn't depend on default-face
+;; this is a fix for linum + text-sale-increase
+(set-face-attribute 'linum nil :height 160)
+
+;; highlight the current line
+(global-hl-line-mode)
 
 ;; Disable toolbars
 (tool-bar-mode -1)
+
+;; Highlight the current line
+;; (hl-line-mode 't)
 
 ;; Git gutter fringe
 (global-git-gutter+-mode t)

@@ -1,8 +1,14 @@
 ;; RMS is wrong about sentences.
 (setq sentence-end-double-space nil)
 
-;; if I'm going to list out buffers, I'd rather do it with helm
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;; Use helm by default for buffer switching
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+
+;; keep ido around because why I don't know
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+
+;; bind helm projectile
+(global-set-key (kbd "C-c p") 'helm-projectile)
 
 ;; command-` should cycle frames as per the rest of OS X
 (global-set-key (kbd "M-`") 'other-frame)
